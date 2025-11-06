@@ -26,7 +26,7 @@ export function TabBar({ state, descriptors, navigation } : BottomTabBarProps) {
     <View onLayout={onTabbarLayout} style={styles.tabbar}>
       <Animated.View style={[anymatedStyle, {
         position: 'absolute',
-        backgroundColor: '#723FEB',
+        backgroundColor: '#82BCFF',
         borderRadius: 30,
         marginHorizontal: 12,
         height: dimensions.height - 15,
@@ -70,7 +70,7 @@ export function TabBar({ state, descriptors, navigation } : BottomTabBarProps) {
                 onLongPress={onLongPress}
                 isFocused={isFocused}
                 routeName={route.name}
-                color={ isFocused ? "#672ab7" : "#222"}
+                color={ isFocused ? "#82BCFF" : "#222"}
                 label={label}
             />
         );
