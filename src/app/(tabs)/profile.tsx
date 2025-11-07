@@ -29,15 +29,17 @@ const Profile = () => {
                             <TextInput
                                 placeholder=""
                                 style={styles.input}
+                                inputMode='email'
                             />
                         </View>
 
-                        <View style={{ height: 1.5, width: '100%', backgroundColor: '#000'}}></View>
+                        <View style={{ height: 1.5, width: '100%', backgroundColor: '#000', marginTop:20}}></View>
                         
-                        <View style={{ marginTop: 15 }}>
+                        <View style={{ marginTop:20 }}>
                             <Text style={styles.labelTitle}>Senha Atual</Text>
                             <TextInput
                                 placeholder=""
+                                secureTextEntry
                                 style={styles.input}
                             />
                         </View>
@@ -46,6 +48,7 @@ const Profile = () => {
                             <Text style={styles.labelTitle}>Nova Senha</Text>
                             <TextInput
                                 placeholder=""
+                                secureTextEntry
                                 style={styles.input}
                             />
                         </View>

@@ -28,7 +28,7 @@ const TabBarButton = ({
     }, [scale, isFocused])
 
     const animatedIconStyle = useAnimatedStyle(() => {
-        const scaleValue = interpolate(scale.value, [0, 1], [1, 1.2]);
+        const scaleValue = interpolate(scale.value, [0, 5], [1, 2.2]);
         const top = interpolate(scale.value, [0, 1], [1, 9]);
         return {
             transform: [{
@@ -53,6 +53,7 @@ const TabBarButton = ({
         >
             <Animated.View style={animatedIconStyle}>
                 {icon[routeName]({
+                    //color: isFocused ? "#FFF" : "#222",
                     color: isFocused ? "#FFF" : "#222",
                 })}
             </Animated.View>
