@@ -1,10 +1,14 @@
 import Colors from "@/constants/colors";
-import React from "react";
+import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
 const Profile = () => {
-    return (
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [oldPassword, setOldPassword] = useState('')
+    const [newPassword, setNewPassword] = useState('')
 
+    return (
         <View style={{flex:1}}>
 
             <View style={styles.header}>

@@ -14,6 +14,15 @@ const data = [
 const Explore = () => {
     const [value, setValue] = useState(null);
     
+    const [name, setName] = useState('');
+    const [brand, setBrand] = useState('');
+    const [plate, setPlate] = useState('');
+    const [color, setColor] = useState('');
+    const [year, setYear] = useState('');
+    const [mechanic, setMechanic] = useState('');
+    const [description, setDescription] = useState('');
+    const [situation, setSituation] = useState('')
+
     return (
         <View style={{flex:1}}>
 

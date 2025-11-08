@@ -1,13 +1,17 @@
 import colors from "@/constants/colors";
 import { useFonts } from 'expo-font';
 import { Link } from "expo-router";
+import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function Login() {
     const [fontsLoaded] = useFonts({
-        //FonteRussoOne: require('./assets/fonts/RussoOne-Regular.ttf'),
         FonteRussoOne: require('../../../../assets/fonts/RussoOne-Regular.ttf'),
     });
+
+    // dados inseridos
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
     return (
         <View style={{flex:1, backgroundColor: colors.skyblue}}>

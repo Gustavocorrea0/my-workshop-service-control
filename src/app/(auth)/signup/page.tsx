@@ -1,8 +1,47 @@
 import colors from "@/constants/colors";
+import { supabase } from "@/src/lib/supabase";
 import { Link } from "expo-router";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { useState } from "react";
+import { Alert, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function Singup() {
+
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false);
+
+    async function handleSignup() {
+        setLoading(true)
+
+        //criar validacoes
+        if (!email || !password || !name) {
+            Alert.alert("Erro", "Preencha todos os campos!");
+            return;
+        }
+
+        const { data, error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+            options:{ // possivel erro no supabase
+                data:{
+                    name:name
+                }
+            }
+        });
+
+        if (error) {
+            console.log("error create account: " + error.message)
+            Alert.alert("Falha", "Não foi possível criar uma conta");
+            setLoading(false);
+            return;
+        } else {
+            Alert.alert("Sucesso", "Login efetuado")
+        }
+
+        setLoading(false);
+        //router.replace('/')
+    }
 
     return (
         <View style={{flex:1, backgroundColor: colors.skyblue}}>
@@ -20,14 +59,22 @@ export default function Singup() {
                         <TextInput
                             placeholder="Digite seu Nome"
                             style={styles.input}
+                            value={name}
+                            onChangeText={setName}
                         />
                     </View>
 
                     <View>
                         <Text style={styles.labelTitle}>Email</Text>
                         <TextInput
-                            placeholder="Digite seu email"
-                            style={styles.input}
+                        placeholder="Digite seu email"
+                        style={styles.input}
+                        value={email}
+                        onChangeText={setEmail}
+                        keyboardType="email-address"   
+                        autoCapitalize="none"          
+                        autoCorrect={false}            
+                        textContentType="emailAddress" 
                         />
                     </View>
 
@@ -35,8 +82,10 @@ export default function Singup() {
                         <Text style={styles.labelTitle}>Senha</Text>
                         <TextInput
                             placeholder="Digite sua senha"
-                            secureTextEntry
                             style={styles.input}
+                            secureTextEntry
+                            value={password}
+                            onChangeText={setPassword}
                         />
                     </View>
 
