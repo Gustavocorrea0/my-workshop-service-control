@@ -1,4 +1,4 @@
-import { User } from '@supabase/supabase-js';
+import { User } from "@supabase/supabase-js";
 import { createContext, useContext, useState } from "react";
 
 interface AuthContextProps {

@@ -11,12 +11,23 @@ export default function Singup() {
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false);
 
+    async function clearFields() {
+        setName("")
+        setEmail("")
+        setPassword("")
+    }
+
     async function handleSignup() {
         setLoading(true)
 
         //criar validacoes
         if (!email || !password || !name) {
             Alert.alert("Erro", "Preencha todos os campos!");
+            return;
+        }
+
+        if (password.length < 8) {
+            Alert.alert("Erro", "A senha deve possuir no mínimo 8 caracteres");
             return;
         }
 
@@ -32,11 +43,12 @@ export default function Singup() {
 
         if (error) {
             console.log("error create account: " + error.message)
-            Alert.alert("Falha", "Não foi possível criar uma conta");
+            Alert.alert("Falha", "Não foi Possível Criar uma Conta");
             setLoading(false);
             return;
         } else {
-            Alert.alert("Sucesso", "Login efetuado")
+            Alert.alert("Sucesso", "Cadastro Efetuado Com Sucesso")
+            clearFields()
         }
 
         setLoading(false);
@@ -89,8 +101,10 @@ export default function Singup() {
                         />
                     </View>
 
-                    <Pressable style={styles.btnLogin}>
-                        <Text style={styles.buttonText}>Criar Conta</Text>
+                    <Pressable style={styles.btnLogin} onPress={handleSignup}>
+                            <Text style={styles.buttonText}>
+                                {loading ? "Carregando..." : "Criar Conta"}
+                            </Text>
                     </Pressable>
 
                     <Link 
@@ -122,7 +136,7 @@ const styles = StyleSheet.create({
         marginTop: '15%',
         fontFamily: 'FonteRussoOne',
         alignItems: 'center',
-        marginRight: '8.5%'
+        marginRight: '7%'
     },
 
     form: {
