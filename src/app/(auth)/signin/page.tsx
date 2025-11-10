@@ -1,17 +1,51 @@
 import colors from "@/constants/colors";
+import { supabase } from "@/src/lib/supabase";
 import { useFonts } from 'expo-font';
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
-export default function Login() {
+export default function Singin() {
+
     const [fontsLoaded] = useFonts({
         FonteRussoOne: require('../../../../assets/fonts/RussoOne-Regular.ttf'),
     });
 
     // dados inseridos
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    async function clearFields() {
+        setPassword('');
+        setEmail('');
+    }
+
+    async function handleSignIn() {
+        setLoading(true);
+
+        if (!email || !password) {
+            Alert.alert("Erro", "Preencha todos os campos!");
+            return;
+        }
+
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+        if (error) {
+            Alert.alert("Erro", "Dados Inválidos")
+            clearFields()
+            setLoading(false);
+            return;
+        }
+
+        clearFields()
+        setLoading(false);
+        
+        router.replace("/(tabs)");
+    }
 
     return (
         <View style={{flex:1, backgroundColor: colors.skyblue}}>
@@ -28,20 +62,29 @@ export default function Login() {
                         <TextInput
                             placeholder="Digite seu email"
                             style={styles.input}
+                            value={email}
+                            onChangeText={setEmail}
+                            keyboardType="email-address"   
+                            autoCapitalize="none"          
+                            autoCorrect={false}            
+                            textContentType="emailAddress"
                         />
                     </View>
 
                     <View>
                         <Text style={styles.labelTitle}>Senha</Text>
                         <TextInput
-                            placeholder="Digite sua senha"
+                            placeholder="Digite sua Senha"
                             secureTextEntry
                             style={styles.input}
+                            onChangeText={setPassword}
                         />
                     </View>
 
                     <Pressable style={styles.btnLogin}>
-                        <Text style={styles.buttonText}>Entrar</Text>
+                        <Text style={styles.buttonText} onPress={handleSignIn}>
+                            {loading ? 'Carregando...' : 'Entrar'}
+                        </Text>
                     </Pressable>
 
                     <Link 
