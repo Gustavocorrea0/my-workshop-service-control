@@ -1,27 +1,136 @@
 import Colors from "@/constants/colors";
+import { supabase } from "@/src/lib/supabase";
+import { useFonts } from 'expo-font';
 import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Dropdown } from 'react-native-element-dropdown';
 
 const data = [
-    { label: 'Aguardando', value: '1' },
-    { label: 'Em Atendimento', value: '2' },
-    { label: 'Concluido', value: '3' },
+    { label: 'Novo', value: '0' },
+    { label: 'Parado', value: '1' },
+    { label: 'Aguardando', value: '2' },
+    { label: 'Em Atendimento', value: '3' },
     { label: 'Aguardando Fornecedor', value: '4' },
     { label: 'Aguardando Cliente', value: '5' },
+    { label: 'Concluido', value: '6' },
 ];
 
 const Explore = () => {
-    const [value, setValue] = useState(null);
+
+    const [fontsLoaded] = useFonts({
+        FonteRussoOne: require('../../../assets/fonts/RussoOne-Regular.ttf'),
+    });
+
+    const [value, setValue] = useState(1);
+    const [name, setNameCar] = useState(''); 
+    const [brand, setBrandCar] = useState(''); 
+    const [plate, setPlateCar] = useState(''); 
+    const [color, setColorCar] = useState(''); 
+    const [year, setYearCar] = useState(''); 
+    const [mechanic, setMechanicCar] = useState(''); 
+    const [description, setDescriptionCar] = useState(''); 
+    const [emailUser, setEmailUser] = useState('');
+    const [situation, setSituationCar] = useState(0); 
+    const [loading, setLoading] = useState(false); 
     
-    const [name, setName] = useState('');
-    const [brand, setBrand] = useState('');
-    const [plate, setPlate] = useState('');
-    const [color, setColor] = useState('');
-    const [year, setYear] = useState('');
-    const [mechanic, setMechanic] = useState('');
-    const [description, setDescription] = useState('');
-    const [situation, setSituation] = useState('')
+    const clearFields = () => {
+        setNameCar('');
+        setBrandCar('');
+        setPlateCar('');
+        setColorCar('');
+        setYearCar('') ;
+        setMechanicCar('');
+        setDescriptionCar('');
+        setSituationCar(0);
+    };
+
+    async function getEmailUsuario() {
+        const { data, error } = await supabase.auth.getUser();
+
+        if (error) {
+            console.error('Erro ao obter usuário:', error);
+            return null;
+        }
+
+        const emailUsuario = data.user?.email;
+        setEmailUser(emailUsuario || '');
+
+        return emailUsuario;
+    }
+
+    async function createService() {
+
+        if (name == "") {
+            Alert.alert("Falha", "Nome Inválido");
+            return;
+        }
+
+        if (brand == "") {
+            Alert.alert("Falha", "Marca Inválida");
+            return;
+        }
+
+        if (plate == "") {
+            Alert.alert("Falha", "Placa Inválida");
+            return;
+        }
+
+        if (color == "") {
+            Alert.alert("Falha", "Cor Inválida");
+            return;
+        }
+
+        if (year == "") {
+            Alert.alert("Falha", "Ano Inválido");
+            return;
+        }
+
+        if (mechanic == "") {
+            Alert.alert("Falha", "Mecânico Inválido");
+            return;
+        }
+
+        if (description == "") {
+            Alert.alert("Falha", "Descrição Inválida");
+            return;
+        }
+        
+        getEmailUsuario()
+        
+        if (emailUser == "") {
+            Alert.alert("Falha", "Usuario não Logado");
+            return;
+        }
+
+        const { data, error } = await supabase.from('service').insert([
+            {
+                //id_service: "",
+                //datetime_create: "",
+                //datetime_update: "",
+                car_name: name,
+                car_brand: brand,
+                car_plate: plate,
+                car_color: color,
+                car_year: year,
+                service_description: description,
+                mechanic_responsible: mechanic,
+                service_status: value,
+                user_create: emailUser,
+                user_update: emailUser,
+            }
+          ])
+        
+        if (error) {
+            console.log("Erro: " + error);
+            Alert.alert("Erro", "Não foi possível salvar as Informações");
+            setLoading(false);
+            return;
+        } else {
+            Alert.alert("Sucesso", "Informações Cadastradas");
+            clearFields();
+            return;
+        }
+    }
 
     return (
         <View style={{flex:1}}>
@@ -37,48 +146,60 @@ const Explore = () => {
                         <View>
                             <Text style={styles.labelTitle}>Carro</Text>
                             <TextInput
-                                placeholder="Digite o nome"
+                                placeholder="Digite o nome do carro"
                                 style={styles.input}
+                                onChangeText={setNameCar}
+                                value={name}
                             />
                         </View>
                         
                         <View>
                             <Text style={styles.labelTitle}>Marca</Text>
                             <TextInput
-                                placeholder="Digite a marca"
+                                placeholder="Digite a marca do carro"
                                 style={styles.input}
+                                onChangeText={setBrandCar}
+                                value={brand}
                             />
                         </View>
 
                         <View>
                             <Text style={styles.labelTitle}>Placa</Text>
                             <TextInput
-                                placeholder="Digite a placa"
+                                placeholder="Digite a placa do carro"
                                 style={styles.input}
+                                onChangeText={setPlateCar}
+                                value={plate}
                             />
                         </View>
 
                         <View>
                             <Text style={styles.labelTitle}>Cor</Text>
                             <TextInput
-                                placeholder="Digite a cor"
+                                placeholder="Digite a cor do carro do carro"
                                 style={styles.input}
+                                onChangeText={setColorCar}
+                                value={color}
                             />
                         </View>
 
                         <View>
-                            <Text style={styles.labelTitle}>Cor</Text>
+                            <Text style={styles.labelTitle}>Ano</Text>
                             <TextInput
-                                placeholder="Digite o ano"
+                                placeholder="Digite o ano do carro"
                                 style={styles.input}
+                                onChangeText={setYearCar}
+                                value={year}
                             />
                         </View>
 
                         <View>
-                            <Text style={styles.labelTitle}>Mecanico</Text>
+                            <Text style={styles.labelTitle}>Mecânico</Text>
                             <TextInput
-                                placeholder="Digite o nome do mecanico responsavel"
+                                placeholder="Digite o nome do mecânico responsavél"
                                 style={styles.input}
+                                onChangeText={setMechanicCar}
+                                value={mechanic}
                             />
                         </View>
 
@@ -88,6 +209,8 @@ const Explore = () => {
                                 placeholder="Digite a descrição do serviço"
                                 style={styles.inputDescription}
                                 numberOfLines={4}
+                                onChangeText={setDescriptionCar}
+                                value={description}
                             />
                         </View>
 
@@ -111,13 +234,21 @@ const Explore = () => {
                                 />
                         </View>
 
-                        <Pressable style={styles.btnSave}>
-                            <Text style={styles.buttonText}>Salvar</Text>
-                        </Pressable>
+                        <TouchableOpacity style={styles.btnSave} 
+                                          onPress={createService}
+                                          activeOpacity={0.5}
+                        >
+                            <Text style={styles.buttonText}>
+                                {loading ? 'Carregando...' : 'Salvar'}
+                            </Text>
+                        </TouchableOpacity>
 
-                        <Pressable style={styles.btnCancel}>
+                        <TouchableOpacity style={styles.btnCancel} 
+                                          onPress={ clearFields }
+                                          activeOpacity={0.5}
+                        >
                             <Text style={styles.buttonText}>Cancelar</Text>
-                        </Pressable>
+                        </TouchableOpacity>
 
                         <View style={{ height: 400, width:'100%', backgroundColor: Colors.white}}></View>
 
@@ -150,7 +281,8 @@ const styles = StyleSheet.create({
     title: {
         color: Colors.white,
         fontSize: 35,
-        marginTop: '10%'
+        marginTop: '10%',
+        fontFamily: 'FonteRussoOne',
     },
 
     form: {
@@ -233,4 +365,4 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     }
 
-})
+});

@@ -1,12 +1,26 @@
 import Colors from "@/constants/colors";
+import { Feather } from "@expo/vector-icons";
+import { useFonts } from 'expo-font';
+import { router } from "expo-router";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 const Home = () => {
+    const [fontsLoaded] = useFonts({
+        FonteRussoOne: require('../../../assets/fonts/RussoOne-Regular.ttf'),
+    });
+
+    async function signOut() {
+        router.replace('/(auth)/signin/page')
+    }
+    
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.title}>MyWorkshop</Text>
+                <Pressable style={styles.btnRetorno} onPress={signOut}>
+                    <Feather name="arrow-left" size={30} color="white"/>
+                </Pressable>
             </View>
         </View>
     );
@@ -32,7 +46,12 @@ const styles = StyleSheet.create({
     },
     title: {
         color: Colors.white,
-        fontSize: 35,
-        marginTop: '10%'
+        fontSize: 33,
+        marginTop: '10%',
+        fontFamily: 'FonteRussoOne'
+    },
+    btnRetorno: {
+        marginRight:"80%",
+        marginTop: "-9%"
     }
 })
