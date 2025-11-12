@@ -118,7 +118,7 @@ const Explore = () => {
                 user_create: emailUser,
                 user_update: emailUser,
             }
-          ])
+        ])
         
         if (error) {
             console.log("Erro: " + error);
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
     
     title: {
         color: Colors.white,
-        fontSize: 35,
+        fontSize: 33,
         marginTop: '10%',
         fontFamily: 'FonteRussoOne',
     },
