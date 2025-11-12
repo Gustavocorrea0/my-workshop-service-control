@@ -1,9 +1,10 @@
 import colors from "@/constants/colors";
+import { supabase } from "@/src/lib/supabase";
 //import { supabase } from "@/src/lib/supabase";
 import { useFonts } from 'expo-font';
 import { Link, router } from "expo-router";
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function Singin() {
 
@@ -24,7 +25,7 @@ export default function Singin() {
     async function handleSignIn() {
         setLoading(true);
 
-        /*if (!email || !password) {
+        if (!email || !password) {
             Alert.alert("Erro", "Preencha todos os campos!");
             return;
         }
@@ -40,7 +41,7 @@ export default function Singin() {
             setLoading(false);
             return;
         }
-        */
+        
         clearFields()
         setLoading(false);
         

@@ -11,7 +11,8 @@ const Home = () => {
         id_service: string; 
         car_name: string, 
         car_plate: string, 
-        service_status: BigInt }[]>([]);
+        service_status: BigInt 
+    }[]>([]);
 
     const [fontsLoaded] = useFonts({
         FonteRussoOne: require('../../../assets/fonts/RussoOne-Regular.ttf'),
@@ -22,13 +23,15 @@ const Home = () => {
     async function signOut() {
         router.replace('/(auth)/signin/page')
     }
+
+    async function openCard() {
+        router.replace('/(auth)/signin/page')
+    }
     
     async function readAllServices() {
 
         setRefreshing(true);
-        //const { data, error } = await supabase.from('service').select();
         const { data, error } = await supabase.from('service').select("id_service, car_name, car_plate, service_status");
-        // const { data, error } = await supabase.from("service").select("nome, email");
 
         if (error) {
             Alert.alert("Falha", "Dados nao encontrados")
@@ -69,7 +72,10 @@ const Home = () => {
                         data={services}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item }) => (
-                            <TouchableOpacity style={styles.card}>
+                            <TouchableOpacity 
+                                style={styles.card}
+                                //onPress={}
+                                >
                                 <Text style={styles.textTitleCard}>{item.car_name}</Text>
                                 <Text style={styles.textPlateCard}>Plate: {item.car_plate}</Text>
                             </TouchableOpacity>
