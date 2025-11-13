@@ -23,10 +23,6 @@ const Home = () => {
     async function signOut() {
         router.replace('/(auth)/signin/page')
     }
-
-    async function openCard() {
-        router.replace('/(auth)/signin/page')
-    }
     
     async function readAllServices() {
 
@@ -40,7 +36,7 @@ const Home = () => {
 
         if (!data || data.length === 0) {
             Alert.alert("Atenção", "Nenhum serviço encontrado");
-        return;
+            return;
         }
 
         setServices(data);
@@ -74,7 +70,12 @@ const Home = () => {
                         renderItem={({ item }) => (
                             <TouchableOpacity 
                                 style={styles.card}
-                                //onPress={}
+                                onPress={() =>
+                                        router.push({
+                                            pathname: "/details/[id]",
+                                            params: { id: item.id_service, name: item.car_name },
+                                        })
+                                    }
                                 >
                                 <Text style={styles.textTitleCard}>{item.car_name}</Text>
                                 <Text style={styles.textPlateCard}>Plate: {item.car_plate}</Text>
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     },
     
     card: { 
-        width: 380,
+        width:350,
         height: 100,
         backgroundColor: colors.skyblue,
         padding: 15,

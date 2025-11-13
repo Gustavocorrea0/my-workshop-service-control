@@ -334,9 +334,13 @@ const styles = StyleSheet.create({
     },
 
     placeholderStyle: { color: '#999', fontSize: 16 },
+
     selectedTextStyle: { color: '#000', fontSize: 16 },
+
     iconStyle: { width: 20, height: 20 },
+
     inputSearchStyle: { height: 40, fontSize: 16 },
+    
     result: { marginTop: 20, fontSize: 18 },
 
     btnSave: {
