@@ -21,7 +21,23 @@ const Home = () => {
     const [refreshing, setRefreshing] = useState(false);
 
     async function signOut() {
-        router.replace('/(auth)/signin/page')
+        try {
+            const { error } = await supabase.auth.signOut();
+
+            if (error) {
+            console.error("Erro ao desconectar:", error);
+            Alert.alert("Erro", "Não foi possível desconectar. Tente novamente.");
+            return;
+            }
+
+            // Sucesso
+            Alert.alert("Sucesso", "Você foi desconectado!");
+            router.replace("/(auth)/signin/page");
+
+        } catch (err) {
+            console.error("Erro inesperado no signOut:", err);
+            Alert.alert("Erro", "Ocorreu um erro inesperado. Tente novamente.");
+        }
     }
     
     async function readAllServices() {
@@ -122,8 +138,8 @@ const styles = StyleSheet.create({
     },
     
     card: { 
-        width:350,
-        height: 100,
+        width:360,
+        height: 95,
         backgroundColor: colors.skyblue,
         padding: 15,
         borderRadius: 20,

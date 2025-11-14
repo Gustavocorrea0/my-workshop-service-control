@@ -44,11 +44,10 @@ const Explore = () => {
         setSituationCar(0);
     };
 
-    async function getEmailUsuario() {
+    async function getEmailUser() {
         const { data, error } = await supabase.auth.getUser();
 
         if (error) {
-            console.error('Erro ao obter usuário:', error);
             return null;
         }
 
@@ -56,7 +55,7 @@ const Explore = () => {
         setEmailUser(emailUsuario || '');
 
         return emailUsuario;
-    }
+    }   
 
     async function createService() {
 
@@ -70,7 +69,7 @@ const Explore = () => {
             return;
         }
 
-        if (plate == "") {
+        if (plate.length != 7) {
             Alert.alert("Falha", "Placa Inválida");
             return;
         }
@@ -80,7 +79,10 @@ const Explore = () => {
             return;
         }
 
-        if (year == "") {
+        if (               
+            year == "" ||
+            Number(year) > Number(new Date().getFullYear() + 1) 
+        ) {
             Alert.alert("Falha", "Ano Inválido");
             return;
         }
@@ -95,33 +97,29 @@ const Explore = () => {
             return;
         }
         
-        getEmailUsuario()
+        const email = await getEmailUser();
         
-        if (emailUser == "") {
+        if (email == "") {
             Alert.alert("Falha", "Usuario não Logado");
             return;
         }
 
         const { data, error } = await supabase.from('service').insert([
             {
-                //id_service: "",
-                //datetime_create: "",
-                //datetime_update: "",
                 car_name: name,
                 car_brand: brand,
-                car_plate: plate,
+                car_plate: plate.toUpperCase(),
                 car_color: color,
-                car_year: year,
+                car_year: Number(year),
                 service_description: description,
                 mechanic_responsible: mechanic,
                 service_status: value,
-                user_create: emailUser,
-                user_update: emailUser,
+                user_create: email,
+                user_update: email,
             }
         ])
         
         if (error) {
-            console.log("Erro: " + error);
             Alert.alert("Erro", "Não foi possível salvar as Informações");
             setLoading(false);
             return;
@@ -170,6 +168,7 @@ const Explore = () => {
                                 style={styles.input}
                                 onChangeText={setPlateCar}
                                 value={plate}
+                                
                             />
                         </View>
 
@@ -190,6 +189,7 @@ const Explore = () => {
                                 style={styles.input}
                                 onChangeText={setYearCar}
                                 value={year}
+                                keyboardType="numeric"
                             />
                         </View>
 
