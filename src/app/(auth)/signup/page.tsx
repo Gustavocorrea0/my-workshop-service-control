@@ -2,7 +2,7 @@ import colors from "@/constants/colors";
 import { supabase } from "@/src/lib/supabase";
 import { Link } from "expo-router";
 import { useState } from "react";
-import { Alert, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function Singup() {
 
@@ -23,26 +23,27 @@ export default function Singup() {
         //criar validacoes
         if (!email || !password || !name) {
             Alert.alert("Erro", "Preencha todos os campos!");
+            setLoading(false);
             return;
         }
 
         if (password.length < 8) {
             Alert.alert("Erro", "A senha deve possuir no mínimo 8 caracteres");
+            setLoading(false);
             return;
         }
 
+        // Criar conta
         const { data, error } = await supabase.auth.signUp({
-            email: email,
-            password: password,
-            options:{ // possivel erro no supabase
-                data:{
-                    name:name
-                }
+            email,
+            password,
+            options: {
+                data: { name } 
             }
         });
 
         if (error) {
-            console.log("error create account: " + error.message)
+            console.error("error create account: " + error.message)
             Alert.alert("Falha", "Não foi Possível Criar uma Conta");
             setLoading(false);
             return;
@@ -101,11 +102,11 @@ export default function Singup() {
                         />
                     </View>
 
-                    <Pressable style={styles.btnLogin} onPress={handleSignup}>
+                    <TouchableOpacity style={styles.btnLogin} onPress={handleSignup}>
                             <Text style={styles.buttonText}>
                                 {loading ? "Carregando..." : "Criar Conta"}
                             </Text>
-                    </Pressable>
+                    </TouchableOpacity>
 
                     <Link 
                         href={'/(auth)/signin/page'} 

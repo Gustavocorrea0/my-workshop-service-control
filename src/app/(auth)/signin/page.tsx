@@ -4,7 +4,7 @@ import { supabase } from "@/src/lib/supabase";
 import { useFonts } from 'expo-font';
 import { Link, router } from "expo-router";
 import { useState } from "react";
-import { Alert, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function Singin() {
 
@@ -84,11 +84,11 @@ export default function Singin() {
                         />
                     </View>
 
-                    <Pressable style={styles.btnLogin}>
-                        <Text style={styles.buttonText} onPress={handleSignIn}>
+                    <TouchableOpacity style={styles.btnLogin} onPress={handleSignIn}>
+                        <Text style={styles.buttonText}>
                             {loading ? 'Carregando...' : 'Entrar'}
                         </Text>
-                    </Pressable>
+                    </TouchableOpacity>
 
                     <Link 
                         href={'/(auth)/signup/page'} 
