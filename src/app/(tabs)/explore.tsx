@@ -134,7 +134,7 @@ const Explore = () => {
         <View style={{flex:1}}>
 
             <View style={styles.header}>
-                <Text style={styles.title}>New Service</Text>
+                <Text style={styles.title}>Novo Servico</Text>
             </View>
 
             <ScrollView style={{flex: 1}}>

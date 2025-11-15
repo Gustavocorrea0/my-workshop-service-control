@@ -1,11 +1,16 @@
 import Colors from "@/constants/colors";
 import { supabase } from "@/src/lib/supabase";
+import { useFonts } from 'expo-font';
 import { useFocusEffect } from "expo-router";
 import React, { useCallback, useState } from "react";
 import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 const Profile = () => {
 
+    const [fontsLoaded] = useFonts({
+        FonteRussoOne: require('../../../assets/fonts/RussoOne-Regular.ttf'),
+    });
+    
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [oldPassword, setOldPassword] = useState('')
@@ -37,7 +42,8 @@ const Profile = () => {
     async function updatePasswordUser() {
 
         if (oldPassword == "" || newPassword == "") {
-            return Alert.alert("Falha", "Preencha todos os campos.");
+            Alert.alert("Falha", "Preencha todos os campos.");
+            return 
         }
         
         setLoading(true)
@@ -70,10 +76,10 @@ const Profile = () => {
             return;
         }
 
-        setLoading(false);
+        Alert.alert("Sucesso", "Senha Atualizada com Sucesso")
         setOldPassword('');
         setNewPassword('');
-        Alert.alert("Sucesso", "Senha Atualizada com Sucesso")
+        setLoading(false);
     }
 
     async function updateNameUser() {
@@ -130,6 +136,7 @@ const Profile = () => {
                                 secureTextEntry
                                 style={styles.input}
                                 onChangeText={setOldPassword}
+                                value={oldPassword}
                             />
                         </View>
 
@@ -140,6 +147,7 @@ const Profile = () => {
                                 secureTextEntry
                                 style={styles.input}
                                 onChangeText={setNewPassword}
+                                value={newPassword}
                             />
                         </View>
 
@@ -179,10 +187,11 @@ const styles = StyleSheet.create({
 
     title: {
         color: Colors.white,
-        fontSize: 35,
-        marginTop: '10%'
+        fontSize: 33,
+        marginTop: '10%',
+        fontFamily: 'FonteRussoOne'
     },
-
+    
     form: {
         flex: 2,
         backgroundColor: Colors.white,
@@ -211,8 +220,8 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         paddingHorizontal: 12,
         paddingVertical: 12,
-        textAlignVertical: 'top', // garante que o texto comece no topo
-        minHeight: 150, // altura mínima maior que a de um input comum
+        textAlignVertical: 'top', 
+        minHeight: 150, 
         fontSize: 16,
         backgroundColor: '#fff'
     },

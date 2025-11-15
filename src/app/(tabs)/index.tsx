@@ -31,7 +31,7 @@ const Home = () => {
             }
 
             // Sucesso
-            Alert.alert("Sucesso", "Você foi desconectado!");
+            //Alert.alert("Sucesso", "Você foi desconectado!");
             router.replace("/(auth)/signin/page");
 
         } catch (err) {
@@ -108,7 +108,6 @@ export default Home;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: Colors.white,
         alignItems: 'center',
         marginTop: '5%',
@@ -138,7 +137,7 @@ const styles = StyleSheet.create({
     },
     
     card: { 
-        width:360,
+        width: 355,
         height: 95,
         backgroundColor: colors.skyblue,
         padding: 15,
