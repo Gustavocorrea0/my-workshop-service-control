@@ -56,7 +56,7 @@ This application provides complete maintenance management through:
 ## 🧾 UML Diagram
 
 <p align="center">
-  <img src="../my-workshop/screens-project/img_uml.png" alt="UML Diagram" width="650"/>
+  <img src="./screens-project/img_uml.png" alt="UML Diagram" width="650"/>
 </p>
 
 ---
@@ -64,9 +64,9 @@ This application provides complete maintenance management through:
 ## 📱 Screens of Project
 
 <p align="center">
-  <img src="../my-workshop/screens-project/img-1.jpeg" alt="Screen 1" width="200"/>
-  <img src="../my-workshop/screens-project/img-2.jpeg" alt="Screen 2" width="200"/>
-  <img src="../my-workshop/screens-project/page.gif" alt="App Demo" width="200"/>
+  <img src="./screens-project/img-1.jpeg" alt="Screen 1" width="200"/>
+  <img src="./screens-project/img-2.jpeg" alt="Screen 2" width="200"/>
+  <img src="./screens-project/page.gif" alt="App Demo" width="200"/>
 </p>
 
 ---
