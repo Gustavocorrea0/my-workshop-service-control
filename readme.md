@@ -75,7 +75,7 @@ This application provides complete maintenance management through:
 
 ```bash
 # Clone this repository
-git clone <url>
+git clone https://github.com/Gustavocorrea0/my-workshop-service-control.git
 
 # Navigate to the project folder
 cd my-workshop
